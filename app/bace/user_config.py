@@ -2,7 +2,7 @@
 import scipy.stats
 import numpy as np
 
-author       = 'Pen Example Application' # Your name here
+author       = 'Jiayue Zhang' # Your name here
 size_thetas  = 2500                      # Size of sample drawn from prior distribuion over preference parameters.
 answers      = [0, 1]                    # All possible answers that can be observed.
 max_opt_time = 5                         # Stop Bayesian Optimization process after max_opt_time and return best design.
@@ -21,8 +21,8 @@ conf_dict = dict(
 # Dictionary where each preference parameter has a prior distribution specified by a scipy.stats distribution
 # All entries must have a .rvs() and .log_pdf() method
 theta_params = dict(
-    blue_ink = scipy.stats.uniform(loc=-2, scale=4),
-    gel_pen  = scipy.stats.norm(loc=1, scale=1),
+    repay    = scipy.stats.uniform(loc=-2, scale=4),
+    bboxx    = scipy.stats.norm(loc=1, scale=1),
     mu       = scipy.stats.uniform(loc=1, scale=9)
 )
 
@@ -30,12 +30,12 @@ theta_params = dict(
 # Dictionary where each parameter specifies what designs can be chosen for a characteristic
 # See https://github.com/ARM-software/mango#DomainSpace for details on specifying designs
 design_params = dict(
-    price_a   = scipy.stats.uniform(0.5, 5),
-    price_b   = scipy.stats.uniform(0.5, 5),
-    color_a   = ['Black', 'Blue'],
-    color_b   = ['Black', 'Blue'],
-    type_a    = ['Ballpoint', 'Gel'],
-    type_b    = ['Ballpoint', 'Gel']
+    price_a   = scipy.stats.uniform(100, 5000),
+    price_b   = scipy.stats.uniform(100, 5000),
+    repay_a   = scipy.stats.uniform(10, 100),
+    repay_b   = scipy.stats.uniform(10, 100),
+    type_a    = ['SunKing', 'BBoxx'],
+    type_b    = ['SunKing', 'BBoxx']
 )
 
 # Specify likelihood function
@@ -43,13 +43,13 @@ design_params = dict(
 def likelihood_pdf(answer, thetas,
                    # All keys in design_params here
                    price_a, price_b,
-                   color_a, color_b,
+                   repay_a, repay_b,
                    type_a, type_b):
 
     eps = 1e-10
 
-    U_a = -price_a + thetas['blue_ink'] * (color_a == "Blue") + thetas['gel_pen'] * (type_a == 'Gel')
-    U_b = -price_b + thetas['blue_ink'] * (color_b == "Blue") + thetas['gel_pen'] * (type_b == 'Gel')
+    U_a = -price_a + thetas['repay'] * repay_a + thetas['bboxx'] * (type_a == 'BBoxx')
+    U_b = -price_b + thetas['repay'] * repay_b + thetas['bboxx'] * (type_b == 'BBoxx')
     base_utility_diff = U_b - U_a
 
     # Choose higher utility option with probability p. Choose randomly otherwise.
