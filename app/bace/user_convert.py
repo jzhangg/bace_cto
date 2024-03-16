@@ -5,9 +5,10 @@ nquestions = 15
 def set_treatments(profile, **kwargs):
     return profile
 
-def choice_message(label, price, color, pen_type):
+def choice_message(label, price, repay, type):
 
-    price = '${:,.2f}'.format(price)
+    price = '${:,.0f}'.format(price)
+    repay = '${:,.0f}'.format(repay)
 
     # Create the HTML table
     html_table = f"""
@@ -17,13 +18,13 @@ def choice_message(label, price, color, pen_type):
                     <th style="padding: 10px"><b>{label}</b></th>
                 </tr>
                 <tr>
-                    <td style="padding: 10px; border-top: 1px solid black"><strong>Price:</strong> {price}</td>
+                    <td style="padding: 10px; border-top: 1px solid black"><strong>Deposit:</strong> {price}</td>
                 </tr>
                 <tr>
-                    <td style="padding: 10px; border-top: 1px solid black"><strong>Pen Color:</strong> {color}</td>
+                    <td style="padding: 10px; border-top: 1px solid black"><strong>Daily Repayment:</strong> {repay}</td>
                 </tr>
                 <tr>
-                    <td style="padding: 10px; border-top: 1px solid black"><strong>Pen Type:</strong> {pen_type}</td>
+                    <td style="padding: 10px; border-top: 1px solid black"><strong>Brand:</strong> {type}</td>
                 </tr>
             </tbody>
         </table>
@@ -37,20 +38,20 @@ def convert_design(design, profile, request_data, choice_message=choice_message,
 
     output = {f'{key}_{Q}': value for key, value in design.items()}
 
-    output[f'message_0_{Q}'] = choice_message("Pen A", design['price_a'], design['color_a'], design['type_a'])
-    output[f'message_1_{Q}'] = choice_message("Pen B", design['price_b'], design['color_b'], design['type_b'])
+    output[f'message_0_{Q}'] = choice_message("Solar A", design['price_a'], design['repay_a'], design['type_a'])
+    output[f'message_1_{Q}'] = choice_message("Solar B", design['price_b'], design['repay_b'], design['type_b'])
 
     return output
 
 def convert_design_surveycto(design, profile, request_data, **kwargs):
 
     output = ""
-    vars = ['price', 'color', 'type']
+    vars = ['price', 'repay', 'type']
 
     for var in vars:
-        if var == 'price':
+        if var == 'price' | var == 'repay':
             # Format as currency with two decimal places
-            row = f"{var}:${design.get(f'{var}_a'):,.2f}:${design.get(f'{var}_b'):,.2f}"
+            row = f"{var}:{design.get(f'{var}_a'):,.0f}:{design.get(f'{var}_b'):,.0f}"
         else:
             row = f"{var}:{design.get(f'{var}_a')}:{design.get(f'{var}_b')}"
 
