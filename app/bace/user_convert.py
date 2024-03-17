@@ -7,24 +7,25 @@ def set_treatments(profile, **kwargs):
 
 def choice_message(label, price, repay, type):
 
-    price = '${:,.0f}'.format(price)
-    repay = '${:,.0f}'.format(repay)
+    price = 'Ksh {:,.0f}'.format(price)
+    repay = 'Ksh {:,.0f}'.format(repay)
+    
 
     # Create the HTML table
     html_table = f"""
         <table style="background-color: lightgray; border-collapse: collapse; border: 1px solid black;">
             <tbody>
                 <tr>
-                    <th style="padding: 10px"><b>{label}</b></th>
+                    <th style="padding: 20px"><b>{label}</b></th>
                 </tr>
                 <tr>
-                    <td style="padding: 10px; border-top: 1px solid black"><strong>Deposit:</strong> {price}</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Deposit:</strong> {price}</td>
                 </tr>
                 <tr>
-                    <td style="padding: 10px; border-top: 1px solid black"><strong>Daily Repayment:</strong> {repay}</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Daily Repayment:</strong> {repay}</td>
                 </tr>
                 <tr>
-                    <td style="padding: 10px; border-top: 1px solid black"><strong>Brand:</strong> {type}</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Brand:</strong> {type}</td>
                 </tr>
             </tbody>
         </table>
@@ -49,8 +50,8 @@ def convert_design_surveycto(design, profile, request_data, **kwargs):
     vars = ['price', 'repay', 'type']
 
     for var in vars:
-        if var == 'price' | var == 'repay':
-            # Format as currency with two decimal places
+        if var == 'price' or var == 'repay':
+            # Format as currency with no decimal places
             row = f"{var}:{design.get(f'{var}_a'):,.0f}:{design.get(f'{var}_b'):,.0f}"
         else:
             row = f"{var}:{design.get(f'{var}_a')}:{design.get(f'{var}_b')}"

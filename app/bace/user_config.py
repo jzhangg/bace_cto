@@ -21,17 +21,17 @@ conf_dict = dict(
 # Dictionary where each preference parameter has a prior distribution specified by a scipy.stats distribution
 # All entries must have a .rvs() and .log_pdf() method
 theta_params = dict(
-    repay    = scipy.stats.uniform(loc=-2, scale=4),
-    bboxx    = scipy.stats.norm(loc=1, scale=1),
-    mu       = scipy.stats.uniform(loc=1, scale=9)
+    repay    = scipy.stats.norm(loc=-200, scale=50),
+    bboxx    = scipy.stats.norm(loc=0, scale=100),
+    mu       = scipy.stats.norm(loc=0, scale=100)
 )
 
 # Design parameters (design_params)
 # Dictionary where each parameter specifies what designs can be chosen for a characteristic
 # See https://github.com/ARM-software/mango#DomainSpace for details on specifying designs
 design_params = dict(
-    price_a   = scipy.stats.uniform(100, 5000),
-    price_b   = scipy.stats.uniform(100, 5000),
+    price_a   = scipy.stats.uniform(300, 2000),
+    price_b   = scipy.stats.uniform(300, 2000),
     repay_a   = scipy.stats.uniform(10, 100),
     repay_b   = scipy.stats.uniform(10, 100),
     type_a    = ['SunKing', 'BBoxx'],
