@@ -22,7 +22,7 @@ conf_dict = dict(
 # All entries must have a .rvs() and .log_pdf() method
 theta_params = dict(
     beta    = scipy.stats.norm(loc=1, scale=0.5),
-    gamma    = scipy.stats.beta(20,0.5),
+    delta    = scipy.stats.beta(20,0.5),
     mu       = scipy.stats.norm(loc=0, scale=100)
 )
 
