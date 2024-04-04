@@ -21,8 +21,8 @@ conf_dict = dict(
 # Dictionary where each preference parameter has a prior distribution specified by a scipy.stats distribution
 # All entries must have a .rvs() and .log_pdf() method
 theta_params = dict(
-    repay    = scipy.stats.norm(loc=-200, scale=50),
-    bboxx    = scipy.stats.norm(loc=0, scale=100),
+    beta    = scipy.stats.norm(loc=1, scale=0.5),
+    gamma    = scipy.stats.beta(20,0.5),
     mu       = scipy.stats.norm(loc=0, scale=100)
 )
 
@@ -34,8 +34,8 @@ design_params = dict(
     price_b   = scipy.stats.uniform(300, 2000),
     repay_a   = scipy.stats.uniform(10, 100),
     repay_b   = scipy.stats.uniform(10, 100),
-    type_a    = ['SunKing', 'BBoxx'],
-    type_b    = ['SunKing', 'BBoxx']
+    type_a    = ['Now', 'Tomorrow'],
+    type_b    = ['Now', 'Tomorrow']
 )
 
 # Specify likelihood function
@@ -48,12 +48,13 @@ def likelihood_pdf(answer, thetas,
 
     eps = 1e-10
 
-    U_a = -price_a + thetas['repay'] * repay_a + thetas['bboxx'] * (type_a == 'BBoxx')
-    U_b = -price_b + thetas['repay'] * repay_b + thetas['bboxx'] * (type_b == 'BBoxx')
+
+    U_a = (-price_a - thetas['beta']*thetas['delta']/(1-thetas['delta']) * (repay_a - thetas['mu'])) * (1+thetas['delta']*(type_a == 'Tomorrow')) + (price_a*(1-thetas['beta'])*thetas['delta']*(type_a == 'Tomorrow'))
+    U_b = (-price_b - thetas['beta']*thetas['delta']/(1-thetas['delta']) * (repay_b - thetas['mu'])) * (1+thetas['delta']*(type_b == 'Tomorrow')) + (price_b*(1-thetas['beta'])*thetas['delta']*(type_b == 'Tomorrow'))
     base_utility_diff = U_b - U_a
 
     # Choose higher utility option with probability p. Choose randomly otherwise.
-    likelihood = 1 / (1 + np.exp(-1 * thetas['mu'] * base_utility_diff))
+    likelihood = 1 / (1 + np.exp(-1  * base_utility_diff))
 
     likelihood[likelihood < eps] = eps
     likelihood[likelihood > (1 - eps)] = 1 - eps
