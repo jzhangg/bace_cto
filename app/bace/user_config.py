@@ -49,8 +49,8 @@ def likelihood_pdf(answer, thetas,
     eps = 1e-10
 
 
-    U_a = (-price_a - thetas['beta']*thetas['delta']/(1-thetas['delta']) * (repay_a - thetas['mu'])) * (1+thetas['delta']*(type_a == 'Tomorrow')) + (price_a*(1-thetas['beta'])*thetas['delta']*(type_a == 'Tomorrow'))
-    U_b = (-price_b - thetas['beta']*thetas['delta']/(1-thetas['delta']) * (repay_b - thetas['mu'])) * (1+thetas['delta']*(type_b == 'Tomorrow')) + (price_b*(1-thetas['beta'])*thetas['delta']*(type_b == 'Tomorrow'))
+    U_a = (-price_a - thetas['beta']*thetas['delta']/(1-thetas['delta']) * (repay_a - thetas['mu'])) * (1+(thetas['delta']-1)*(type_a == 'Tomorrow')) + (price_a*(1-thetas['beta'])*thetas['delta']*(type_a == 'Tomorrow'))
+    U_b = (-price_b - thetas['beta']*thetas['delta']/(1-thetas['delta']) * (repay_b - thetas['mu'])) * (1+(thetas['delta']-1)*(type_b == 'Tomorrow')) + (price_b*(1-thetas['beta'])*thetas['delta']*(type_b == 'Tomorrow'))
     base_utility_diff = U_b - U_a
 
     # Choose higher utility option with probability p. Choose randomly otherwise.
