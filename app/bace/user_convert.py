@@ -25,7 +25,7 @@ def choice_message(label, price, repay, type):
                     <td style="padding: 20px; border-top: 1px solid black"><strong>Daily Repayment:</strong> {repay}</td>
                 </tr>
                 <tr>
-                    <td style="padding: 20px; border-top: 1px solid black"><strong>Brand:</strong> {type}</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Date:</strong> {type}</td>
                 </tr>
             </tbody>
         </table>
