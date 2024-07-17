@@ -21,21 +21,18 @@ conf_dict = dict(
 # Dictionary where each preference parameter has a prior distribution specified by a scipy.stats distribution
 # All entries must have a .rvs() and .log_pdf() method
 theta_params = dict(
-    beta    = scipy.stats.norm(loc=1, scale=0.5),
-    delta    = scipy.stats.beta(20,0.5),
-    mu       = scipy.stats.norm(loc=0, scale=100)
+    vbar    = scipy.stats.norm(loc=5000, scale=1000),
+    k       = scipy.stats.norm(loc=10000, scale=10000),
 )
 
 # Design parameters (design_params)
 # Dictionary where each parameter specifies what designs can be chosen for a characteristic
 # See https://github.com/ARM-software/mango#DomainSpace for details on specifying designs
 design_params = dict(
-    price_a   = scipy.stats.uniform(300, 2000),
-    price_b   = scipy.stats.uniform(300, 2000),
-    repay_a   = scipy.stats.uniform(10, 100),
-    repay_b   = scipy.stats.uniform(10, 100),
-    type_a    = ['Now', 'Tomorrow'],
-    type_b    = ['Now', 'Tomorrow']
+    price_a   = scipy.stats.uniform(0, 2000),
+    price_b   = scipy.stats.uniform(0, 2000),
+    repay_a   = scipy.stats.uniform(10, 300),
+    repay_b   = scipy.stats.uniform(10, 300)
 )
 
 # Specify likelihood function
@@ -43,14 +40,18 @@ design_params = dict(
 def likelihood_pdf(answer, thetas,
                    # All keys in design_params here
                    price_a, price_b,
-                   repay_a, repay_b,
-                   type_a, type_b):
+                   repay_a, repay_b):
 
     eps = 1e-10
 
+    p_a = repay_a * 4 + 24*362
+    p_b = repay_b * 4 + 24*362
+                       
 
-    U_a = (-price_a - thetas['beta']*thetas['delta']/(1-thetas['delta']) * (repay_a - thetas['mu'])) * (1+(thetas['delta']-1)*(type_a == 'Tomorrow')) + (price_a*(1-thetas['beta'])*thetas['delta']*(type_a == 'Tomorrow'))
-    U_b = (-price_b - thetas['beta']*thetas['delta']/(1-thetas['delta']) * (repay_b - thetas['mu'])) * (1+(thetas['delta']-1)*(type_b == 'Tomorrow')) + (price_b*(1-thetas['beta'])*thetas['delta']*(type_b == 'Tomorrow'))
+    U_0 = 0
+    U_a = -price_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)^2 + (thetas['vbar']-0.5*p_a^2/thetas['vbar'])^2 )
+    U_b = -price_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)^2 + (thetas['vbar']-0.5*p_b^2/thetas['vbar'])^2 )
+
     base_utility_diff = U_b - U_a
 
     # Choose higher utility option with probability p. Choose randomly otherwise.
