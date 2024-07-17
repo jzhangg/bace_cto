@@ -27,7 +27,7 @@ def choice_message(label, price, repay):
                     <td style="padding: 20px; border-top: 1px solid black"><strong>Weekly Repayment #1 to #4:</strong> {repay}</td>
                 </tr>
                 <tr>
-                    <td style="padding: 20px; border-top: 1px solid black"><strong>Weekly Repayment #5 to #56:</strong> {repay}</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Weekly Repayment #5 to #56:</strong> {repay_rest}</td>
                 </tr>
             </tbody>
         </table>
