@@ -9,6 +9,7 @@ def choice_message(label, price, repay):
 
     price = 'Ksh {:,.0f}'.format(price)
     repay = 'Ksh {:,.0f}'.format(repay)
+    repay_rest = 24*7
 
     
 
@@ -24,6 +25,9 @@ def choice_message(label, price, repay):
                 </tr>
                 <tr>
                     <td style="padding: 20px; border-top: 1px solid black"><strong>Weekly Repayment #1 to #4:</strong> {repay}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Weekly Repayment #5 to #56:</strong> {repay}</td>
                 </tr>
             </tbody>
         </table>
