@@ -48,30 +48,18 @@ def likelihood_pdf(answer, thetas,
     p_b = repay_b * 4 + 24*362
                        
 
-    #if thetas['k']<p_a:
-    #    U_a = -price_a + 0.5/thetas['vbar']*( (thetas['vbar']-p_a)**2 + 
-    #                                     (thetas['k']/p_a*thetas['vbar'] - 0.5*(2*p_a-thetas['k']) * thetas['k'] / thetas['vbar'] )**2 )
-    #else:
-    #    U_a = -price_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)**2 + (thetas['vbar']-0.5*p_a^2/thetas['vbar'])**2 )
-    
-    #if thetas['k']<p_b:
-    #    U_b = -price_b + 0.5/thetas['vbar']*( (thetas['vbar']-p_b)**2 + 
-    #                                     (thetas['k']/p_b*thetas['vbar'] - 0.5*(2*p_b-thetas['k']) * thetas['k'] / thetas['vbar'])**2 )
-    #else:                  
-    #    U_b = -price_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)**2 + (thetas['vbar']-0.5*p_b^2/thetas['vbar'])**2 )
-
     # Version 1                   
-    #U_a = -price_a + 0.5/thetas['vbar']*( (thetas['vbar']-p_a)**2 + (thetas['k']/p_a*thetas['vbar'] - 0.5*(2*p_a-thetas['k']) * thetas['k'] / thetas['vbar'] )**2 )
-    #U_b = -price_b + 0.5/thetas['vbar']*( (thetas['vbar']-p_b)**2 + (thetas['k']/p_b*thetas['vbar'] - 0.5*(2*p_b-thetas['k']) * thetas['k'] / thetas['vbar'])**2 )
+    U_a = -price_a + 0.5/thetas['vbar']*( (thetas['vbar']-p_a)**2 + (thetas['k']/p_a*thetas['vbar'] - 0.5*(2*p_a-thetas['k']) * thetas['k'] / thetas['vbar'] )**2 )
+    U_b = -price_b + 0.5/thetas['vbar']*( (thetas['vbar']-p_b)**2 + (thetas['k']/p_b*thetas['vbar'] - 0.5*(2*p_b-thetas['k']) * thetas['k'] / thetas['vbar'])**2 )
                        
     # Version 2
-    Ua1 = -price_a + 0.5/thetas['vbar']*( (thetas['vbar']-p_a)**2 + (thetas['k']/p_a*thetas['vbar'] - 0.5*(2*p_a-thetas['k']) * thetas['k'] / thetas['vbar'] )**2 )
-    Ua2 = -price_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)**2 + (thetas['vbar']-0.5*p_a^2/thetas['vbar'])**2 )
-    U_a = Ua1*(1+1/(1+np.exp(-20*(thetas['k']-p_a)))) + Ua2/(1+np.exp(-20*(thetas['k']-p_a)))
+    #Ua1 = -price_a + 0.5/thetas['vbar']*( (thetas['vbar']-p_a)**2 + (thetas['k']/p_a*thetas['vbar'] - 0.5*(2*p_a-thetas['k']) * thetas['k'] / thetas['vbar'] )**2 )
+    #Ua2 = -price_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)**2 + (thetas['vbar']-0.5*p_a^2/thetas['vbar'])**2 )
+    #U_a = Ua1*(1+1/(1+np.exp(-20*(thetas['k']-p_a)))) + Ua2/(1+np.exp(-20*(thetas['k']-p_a)))
     
-    Ub1 = -price_b + 0.5/thetas['vbar']*( (thetas['vbar']-p_b)**2 + (thetas['k']/p_b*thetas['vbar'] - 0.5*(2*p_b-thetas['k']) * thetas['k'] / thetas['vbar'])**2 )
-    Ub2 = -price_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)**2 + (thetas['vbar']-0.5*p_b^2/thetas['vbar'])**2 )
-    U_b = Ub1*(1+1/(1+np.exp(-20*(thetas['k']-p_b)))) + Ub2/(1+np.exp(-20*(thetas['k']-p_b)))
+    #Ub1 = -price_b + 0.5/thetas['vbar']*( (thetas['vbar']-p_b)**2 + (thetas['k']/p_b*thetas['vbar'] - 0.5*(2*p_b-thetas['k']) * thetas['k'] / thetas['vbar'])**2 )
+    #Ub2 = -price_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)**2 + (thetas['vbar']-0.5*p_b^2/thetas['vbar'])**2 )
+    #U_b = Ub1*(1+1/(1+np.exp(-20*(thetas['k']-p_b)))) + Ub2/(1+np.exp(-20*(thetas['k']-p_b)))
                  
                        
 
