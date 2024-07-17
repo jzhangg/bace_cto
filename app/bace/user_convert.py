@@ -5,10 +5,11 @@ nquestions = 15
 def set_treatments(profile, **kwargs):
     return profile
 
-def choice_message(label, price, repay, type):
+def choice_message(label, price, repay, repay_rest):
 
     price = 'Ksh {:,.0f}'.format(price)
     repay = 'Ksh {:,.0f}'.format(repay)
+    repay_rest = 'Ksh {:,.0f}'.format(repay_rest)
     
 
     # Create the HTML table
@@ -19,13 +20,13 @@ def choice_message(label, price, repay, type):
                     <th style="padding: 20px"><b>{label}</b></th>
                 </tr>
                 <tr>
-                    <td style="padding: 20px; border-top: 1px solid black"><strong>Deposit:</strong> {price}</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Deposit:</strong> {Deposit}</td>
                 </tr>
                 <tr>
-                    <td style="padding: 20px; border-top: 1px solid black"><strong>Daily Repayment:</strong> {repay}</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Daily Repayment:</strong> {Weekly (1-4) }</td>
                 </tr>
                 <tr>
-                    <td style="padding: 20px; border-top: 1px solid black"><strong>Date:</strong> {type}</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Daily Repayment:</strong> {Weekly (5-56) }</td>
                 </tr>
             </tbody>
         </table>
@@ -39,15 +40,17 @@ def convert_design(design, profile, request_data, choice_message=choice_message,
 
     output = {f'{key}_{Q}': value for key, value in design.items()}
 
-    output[f'message_0_{Q}'] = choice_message("Solar A", design['price_a'], design['repay_a'], design['type_a'])
-    output[f'message_1_{Q}'] = choice_message("Solar B", design['price_b'], design['repay_b'], design['type_b'])
+    repay_rest = 24*7
+
+    output[f'message_0_{Q}'] = choice_message("Solar A", design['price_a'], design['repay_a'], repay_rest)
+    output[f'message_1_{Q}'] = choice_message("Solar B", design['price_b'], design['repay_b'], repay_rest)
 
     return output
 
 def convert_design_surveycto(design, profile, request_data, **kwargs):
 
     output = ""
-    vars = ['price', 'repay', 'type']
+    vars = ['price', 'repay']
 
     for var in vars:
         if var == 'price' or var == 'repay':
