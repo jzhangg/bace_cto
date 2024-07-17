@@ -22,7 +22,7 @@ conf_dict = dict(
 # All entries must have a .rvs() and .log_pdf() method
 theta_params = dict(
     vbar    = scipy.stats.norm(loc=5000, scale=1000),
-    k       = scipy.stats.norm(loc=10000, scale=10000),
+    k       = scipy.stats.norm(loc=10000, scale=10000)
 )
 
 # Design parameters (design_params)
@@ -48,9 +48,15 @@ def likelihood_pdf(answer, thetas,
     p_b = repay_b * 4 + 24*362
                        
 
-    U_0 = 0
-    U_a = -price_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)^2 + (thetas['vbar']-0.5*p_a^2/thetas['vbar'])^2 )
-    U_b = -price_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)^2 + (thetas['vbar']-0.5*p_b^2/thetas['vbar'])^2 )
+    if thetas['k']<p_a:
+        U_a = -price_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)^2 + (thetas['k']/p_a*thetas['vbar']-0.5*(2*p_a-thetas['k'])*thetas['k']/thetas['vbar'])^2 )
+    else:
+        U_a = -price_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)^2 + (thetas['vbar']-0.5*p_a^2/thetas['vbar'])^2 )
+    
+    if thetas['k']<p_b:
+        U_b = -price_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)^2 + (thetas['k']/p_b*thetas['vbar']-0.5*(2*p_b-thetas['k'])*thetas['k']/thetas['vbar'])^2 )
+    else:                  
+        U_b = -price_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)^2 + (thetas['vbar']-0.5*p_b^2/thetas['vbar'])^2 )
 
     base_utility_diff = U_b - U_a
 
