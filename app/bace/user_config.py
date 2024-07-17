@@ -62,14 +62,14 @@ def likelihood_pdf(answer, thetas,
     
                        
     if thetas['k']<p_a:
-        U_a = -price_a + 0.5/thetas['vbar']*( (thetas['k']-p_a)**2）
+        U_a = -price_a + thetas['vbar']*p_a
     else:
-        U_a = -price_a + 0.5/thetas['vbar']
+        U_a = -price_a + thetas['vbar']*p_a
     
     if thetas['k']<p_b:
-        U_b = -price_b + 0.5/thetas['vbar']*( (thetas['k']-p_b)**2)
+        U_b = -price_b + thetas['vbar']*p_b
     else:                  
-        U_b = -price_b + 0.5/thetas['vbar']
+        U_b = -price_b + thetas['vbar']*p_b
 
     #U_a = -price_a + thetas['vbar']*repay_a
     #U_b = -price_b + thetas['vbar']*repay_b
