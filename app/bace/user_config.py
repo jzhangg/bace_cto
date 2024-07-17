@@ -21,8 +21,8 @@ conf_dict = dict(
 # Dictionary where each preference parameter has a prior distribution specified by a scipy.stats distribution
 # All entries must have a .rvs() and .log_pdf() method
 theta_params = dict(
-    vbar    = scipy.stats.norm(loc=5000, scale=500),
-    k       = scipy.stats.norm(loc=10000, scale=5000)
+    vbar    = scipy.stats.norm(loc=5000, scale=1000),
+    k       = scipy.stats.norm(loc=10000, scale=10000)
 )
 
 # Design parameters (design_params)
@@ -67,11 +67,11 @@ def likelihood_pdf(answer, thetas,
     # Version 2
     Ua1 = -price_a + 0.5/thetas['vbar']*( (thetas['vbar']-p_a)**2 + (thetas['k']/p_a*thetas['vbar'] - 0.5*(2*p_a-thetas['k']) * thetas['k'] / thetas['vbar'] )**2 )
     Ua2 = -price_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)**2 + (thetas['vbar']-0.5*p_a^2/thetas['vbar'])**2 )
-    U_a = Ua1*(1+1/(1+e**(-20*(thetas['k']-p_a)))) + Ua2/(1+e**(-20*(thetas['k']-p_a)))
+    U_a = Ua1*(1+1/(1+np.exp(-20*(thetas['k']-p_a)))) + Ua2/(1+np.exp(-20*(thetas['k']-p_a)))
     
     Ub1 = -price_b + 0.5/thetas['vbar']*( (thetas['vbar']-p_b)**2 + (thetas['k']/p_b*thetas['vbar'] - 0.5*(2*p_b-thetas['k']) * thetas['k'] / thetas['vbar'])**2 )
     Ub2 = -price_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)**2 + (thetas['vbar']-0.5*p_b^2/thetas['vbar'])**2 )
-    U_b = Ub1*(1+1/(1+e**(-20*(thetas['k']-p_b)))) + Ub2/(1+e**(-20*(thetas['k']-p_b)))
+    U_b = Ub1*(1+1/(1+np.exp(-20*(thetas['k']-p_b)))) + Ub2/(1+np.exp(-20*(thetas['k']-p_b)))
                  
                        
 
