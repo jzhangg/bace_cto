@@ -21,8 +21,8 @@ conf_dict = dict(
 # Dictionary where each preference parameter has a prior distribution specified by a scipy.stats distribution
 # All entries must have a .rvs() and .log_pdf() method
 theta_params = dict(
-    vbar    = scipy.stats.norm(loc=5000, scale=1000),
-    k       = scipy.stats.norm(loc=10000, scale=10000)
+    vbar    = scipy.stats.norm(loc=5000, scale=500),
+    k       = scipy.stats.norm(loc=10000, scale=5000)
 )
 
 # Design parameters (design_params)
