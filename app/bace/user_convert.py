@@ -5,11 +5,11 @@ nquestions = 15
 def set_treatments(profile, **kwargs):
     return profile
 
-def choice_message(label, price, repay, repay_rest):
+def choice_message(label, price, repay):
 
     price = 'Ksh {:,.0f}'.format(price)
     repay = 'Ksh {:,.0f}'.format(repay)
-    repay_rest = 'Ksh {:,.0f}'.format(repay_rest)
+    repay_rest = 24*7
     
 
     # Create the HTML table
@@ -20,13 +20,13 @@ def choice_message(label, price, repay, repay_rest):
                     <th style="padding: 20px"><b>{label}</b></th>
                 </tr>
                 <tr>
-                    <td style="padding: 20px; border-top: 1px solid black"><strong>Deposit:</strong> {Deposit}</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Deposit:</strong> {price}</td>
                 </tr>
                 <tr>
-                    <td style="padding: 20px; border-top: 1px solid black"><strong>Daily Repayment:</strong> {Weekly (1-4) }</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Weekly Repayment #1 to #4:</strong> {repay}</td>
                 </tr>
                 <tr>
-                    <td style="padding: 20px; border-top: 1px solid black"><strong>Daily Repayment:</strong> {Weekly (5-56) }</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Weekly Repayment #5 to #56:</strong> {repay_rest}</td>
                 </tr>
             </tbody>
         </table>
@@ -40,10 +40,9 @@ def convert_design(design, profile, request_data, choice_message=choice_message,
 
     output = {f'{key}_{Q}': value for key, value in design.items()}
 
-    repay_rest = 24*7
 
-    output[f'message_0_{Q}'] = choice_message("Solar A", design['price_a'], design['repay_a'], repay_rest)
-    output[f'message_1_{Q}'] = choice_message("Solar B", design['price_b'], design['repay_b'], repay_rest)
+    output[f'message_0_{Q}'] = choice_message("Solar A", design['price_a'], design['repay_a'])
+    output[f'message_1_{Q}'] = choice_message("Solar B", design['price_b'], design['repay_b'])
 
     return output
 
