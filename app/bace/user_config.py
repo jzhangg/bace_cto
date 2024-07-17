@@ -49,14 +49,18 @@ def likelihood_pdf(answer, thetas,
                        
 
     #if thetas['k']<p_a:
-        U_a = -price_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)^2 + (thetas['k']/p_a*thetas['vbar']-0.5*(2*p_a-thetas['k'])*thetas['k']/thetas['vbar'])^2 )
+    #    U_a = -price_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)^2 + (thetas['k']/p_a*thetas['vbar']-0.5*(2*p_a-thetas['k'])*thetas['k']/thetas['vbar'])^2 )
     #else:
     #    U_a = -price_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)^2 + (thetas['vbar']-0.5*p_a^2/thetas['vbar'])^2 )
     
     #if thetas['k']<p_b:
-        U_b = -price_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)^2 + (thetas['k']/p_b*thetas['vbar']-0.5*(2*p_b-thetas['k'])*thetas['k']/thetas['vbar'])^2 )
+    #    U_b = -price_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)^2 + (thetas['k']/p_b*thetas['vbar']-0.5*(2*p_b-thetas['k'])*thetas['k']/thetas['vbar'])^2 )
     #else:                  
     #    U_b = -price_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)^2 + (thetas['vbar']-0.5*p_b^2/thetas['vbar'])^2 )
+
+    U_a = -price_a + thetas['vbar']*repay_a
+    U_b = -price_b + thetas['vbar']*repay_b
+                       
 
     base_utility_diff = U_b - U_a
 
