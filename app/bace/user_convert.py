@@ -5,9 +5,9 @@ nquestions = 15
 def set_treatments(profile, **kwargs):
     return profile
 
-def choice_message(label, deposit, repay):
+def choice_message(label, price, repay):
 
-    deposit = 'Ksh {:,.0f}'.format(deposit)
+    price = 'Ksh {:,.0f}'.format(price)
     repay = 'Ksh {:,.0f}'.format(repay)
     repay_rest = 24*7
 
@@ -21,7 +21,7 @@ def choice_message(label, deposit, repay):
                     <th style="padding: 20px"><b>{label}</b></th>
                 </tr>
                 <tr>
-                    <td style="padding: 20px; border-top: 1px solid black"><strong>Deposit:</strong> {deposit}</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Deposit:</strong> {price}</td>
                 </tr>
                 <tr>
                     <td style="padding: 20px; border-top: 1px solid black"><strong>Weekly Repayment #1 to #4:</strong> {repay}</td>
@@ -50,10 +50,10 @@ def convert_design(design, profile, request_data, choice_message=choice_message,
 def convert_design_surveycto(design, profile, request_data, **kwargs):
 
     output = ""
-    vars = ['deposit', 'repay']
+    vars = ['price', 'repay']
 
     for var in vars:
-        if var == 'deposit' or var == 'repay':
+        if var == 'price' or var == 'repay':
             # Format as currency with no decimal places
             row = f"{var}:{design.get(f'{var}_a'):,.0f}:{design.get(f'{var}_b'):,.0f}"
         else:
