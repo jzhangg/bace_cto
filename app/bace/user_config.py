@@ -29,8 +29,8 @@ theta_params = dict(
 # Dictionary where each parameter specifies what designs can be chosen for a characteristic
 # See https://github.com/ARM-software/mango#DomainSpace for details on specifying designs
 design_params = dict(
-    price_a   = scipy.stats.uniform(0, 2000),
-    price_b   = scipy.stats.uniform(0, 2000),
+    deposit_a   = scipy.stats.uniform(0, 2000),
+    deposit_b   = scipy.stats.uniform(0, 2000),
     repay_a   = scipy.stats.uniform(10, 300),
     repay_b   = scipy.stats.uniform(10, 300)
 )
@@ -39,7 +39,7 @@ design_params = dict(
 # Returns Prob(answer | theta, design) for each answer in answers
 def likelihood_pdf(answer, thetas,
                    # All keys in design_params here
-                   price_a, price_b,
+                   deposit_a, deposit_b,
                    repay_a, repay_b):
 
     eps = 1e-10
@@ -49,16 +49,16 @@ def likelihood_pdf(answer, thetas,
                        
 
     # Version 1                   
-    U_a = -price_a + 0.5/thetas['vbar']*( (thetas['vbar']-p_a)**2 + (thetas['k']/p_a*thetas['vbar'] - 0.5*(2*p_a-thetas['k']) * thetas['k'] / thetas['vbar'] )**2 )
-    U_b = -price_b + 0.5/thetas['vbar']*( (thetas['vbar']-p_b)**2 + (thetas['k']/p_b*thetas['vbar'] - 0.5*(2*p_b-thetas['k']) * thetas['k'] / thetas['vbar'])**2 )
+    U_a = -deposit_a + 0.5/thetas['vbar']*( (thetas['vbar']-p_a)**2 + (thetas['k']/p_a*thetas['vbar'] - 0.5*(2*p_a-thetas['k']) * thetas['k'] / thetas['vbar'] )**2 )
+    U_b = -deposit_b + 0.5/thetas['vbar']*( (thetas['vbar']-p_b)**2 + (thetas['k']/p_b*thetas['vbar'] - 0.5*(2*p_b-thetas['k']) * thetas['k'] / thetas['vbar'])**2 )
                        
     # Version 2
-    #Ua1 = -price_a + 0.5/thetas['vbar']*( (thetas['vbar']-p_a)**2 + (thetas['k']/p_a*thetas['vbar'] - 0.5*(2*p_a-thetas['k']) * thetas['k'] / thetas['vbar'] )**2 )
-    #Ua2 = -price_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)**2 + (thetas['vbar']-0.5*p_a^2/thetas['vbar'])**2 )
+    #Ua1 = -deposit_a + 0.5/thetas['vbar']*( (thetas['vbar']-p_a)**2 + (thetas['k']/p_a*thetas['vbar'] - 0.5*(2*p_a-thetas['k']) * thetas['k'] / thetas['vbar'] )**2 )
+    #Ua2 = -deposit_a + 0.5/thetas['vbar']*((thetas['vbar']-p_a)**2 + (thetas['vbar']-0.5*p_a^2/thetas['vbar'])**2 )
     #U_a = Ua1*(1+1/(1+np.exp(-20*(thetas['k']-p_a)))) + Ua2/(1+np.exp(-20*(thetas['k']-p_a)))
     
-    #Ub1 = -price_b + 0.5/thetas['vbar']*( (thetas['vbar']-p_b)**2 + (thetas['k']/p_b*thetas['vbar'] - 0.5*(2*p_b-thetas['k']) * thetas['k'] / thetas['vbar'])**2 )
-    #Ub2 = -price_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)**2 + (thetas['vbar']-0.5*p_b^2/thetas['vbar'])**2 )
+    #Ub1 = -deposit_b + 0.5/thetas['vbar']*( (thetas['vbar']-p_b)**2 + (thetas['k']/p_b*thetas['vbar'] - 0.5*(2*p_b-thetas['k']) * thetas['k'] / thetas['vbar'])**2 )
+    #Ub2 = -deposit_b + 0.5/thetas['vbar']*((thetas['vbar']-p_b)**2 + (thetas['vbar']-0.5*p_b^2/thetas['vbar'])**2 )
     #U_b = Ub1*(1+1/(1+np.exp(-20*(thetas['k']-p_b)))) + Ub2/(1+np.exp(-20*(thetas['k']-p_b)))
                  
                        
