@@ -5,9 +5,9 @@ nquestions = 15
 def set_treatments(profile, **kwargs):
     return profile
 
-def choice_message(label, price, repay):
+def choice_message(label, deposit, repay):
 
-    price = 'Ksh {:,.0f}'.format(price)
+    deposit = 'Ksh {:,.0f}'.format(deposit)
     repay = 'Ksh {:,.0f}'.format(repay)
     repay_rest = 24*7
 
@@ -21,7 +21,7 @@ def choice_message(label, price, repay):
                     <th style="padding: 20px"><b>{label}</b></th>
                 </tr>
                 <tr>
-                    <td style="padding: 20px; border-top: 1px solid black"><strong>Deposit:</strong> {price}</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Deposit:</strong> {deposit}</td>
                 </tr>
                 <tr>
                     <td style="padding: 20px; border-top: 1px solid black"><strong>Weekly Repayment #1 to #4:</strong> {repay}</td>
@@ -42,18 +42,18 @@ def convert_design(design, profile, request_data, choice_message=choice_message,
     output = {f'{key}_{Q}': value for key, value in design.items()}
 
 
-    output[f'message_0_{Q}'] = choice_message("Solar A", design['price_a'], design['repay_a'])
-    output[f'message_1_{Q}'] = choice_message("Solar B", design['price_b'], design['repay_b'])
+    output[f'message_0_{Q}'] = choice_message("Solar A", design['deposit_a'], design['repay_a'])
+    output[f'message_1_{Q}'] = choice_message("Solar B", design['deposit_b'], design['repay_b'])
 
     return output
 
 def convert_design_surveycto(design, profile, request_data, **kwargs):
 
     output = ""
-    vars = ['price', 'repay']
+    vars = ['deposit', 'repay']
 
     for var in vars:
-        if var == 'price' or var == 'repay':
+        if var == 'deposit' or var == 'repay':
             # Format as currency with no decimal places
             row = f"{var}:{design.get(f'{var}_a'):,.0f}:{design.get(f'{var}_b'):,.0f}"
         else:
