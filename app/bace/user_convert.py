@@ -1,5 +1,5 @@
 # Number of Questions -> /survey route
-nquestions = 15
+nquestions = 11
 
 # Set treatment variables
 def set_treatments(profile, **kwargs):
@@ -7,9 +7,9 @@ def set_treatments(profile, **kwargs):
 
 def choice_message(label, deposit, repay):
 
-    deposit = 'Ksh {:,.0f}'.format(deposit)
-    repay = 'Ksh {:,.0f}'.format(repay)
-    repay_rest = 24*7
+    deposit = '{:,.0f}'.format(deposit)
+    repay = '{:,.0f}'.format(repay)
+    repay_rest = 50
 
     
 
@@ -27,7 +27,7 @@ def choice_message(label, deposit, repay):
                     <td style="padding: 20px; border-top: 1px solid black"><strong>Weekly Repayment #1 to #4:</strong> {repay}</td>
                 </tr>
                 <tr>
-                    <td style="padding: 20px; border-top: 1px solid black"><strong>Weekly Repayment #5 to #56:</strong> {repay_rest}</td>
+                    <td style="padding: 20px; border-top: 1px solid black"><strong>Weekly Repayment #5 to #16:</strong> {repay_rest}</td>
                 </tr>
             </tbody>
         </table>
