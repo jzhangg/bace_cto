@@ -1,28 +1,23 @@
 # Survey CTO Integration Functions
 
-def convert_design_surveycto(design, profile, request_data, split_to_rows="|", split_to_vars=":"):
+def convert_design_surveycto(design, profile, request_data, **kwargs):
     # Function to convert design for SurveyCTO route.
     # Output produces a single string that captures the design.
-    # Rows are separated by split_to_rows (default = "|")
-    # Values within rows are separated by split_to_vars (default = ":")
-    # E.g. output = "color:blue:black|type:gel:fountain" maps to a table in SurveyCTO of:
+    # Rows are separated by "|", values within rows by ":"
+    # E.g. output = "deposit:100:150|repay:20:25" maps to a table in SurveyCTO of:
     #
-    #       color   | blue  | black
-    #       type    | gel   | fountain
+    #       deposit | 100  | 150
+    #       repay   | 20   | 25
     #
     # See BACE SurveyCTO plug-in and BACE Manual for more details.
 
     output = ""
-    vars = ['price', 'color', 'type']
+    vars = ['deposit', 'repay']
 
     for var in vars:
-        if var == 'price':
-            # Format as currency with two decimal places
-            row = f"{var}{split_to_vars}${design.get(f'{var}_a'):,.2f}{split_to_vars}${design.get(f'{var}_b'):,.2f}"
-        else:
-            row = f"{var}{split_to_vars}{design.get(f'{var}_a')}{split_to_vars}{design.get(f'{var}_b')}"
-
-        output += row + split_to_rows
+        # Format as currency with no decimal places
+        row = f"{var}:{design.get(f'{var}_a'):,.0f}:{design.get(f'{var}_b'):,.0f}"
+        output += row + "|"
 
     print(output)
 
