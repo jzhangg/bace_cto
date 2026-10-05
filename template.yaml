@@ -29,9 +29,10 @@ Resources:
         -
           AttributeName: profile_id
           KeyType: HASH
-      ProvisionedThroughput:
-        ReadCapacityUnits: 24
-        WriteCapacityUnits: 24
+      # On-demand billing: no charge while idle. Provisioned capacity (previously 24 RCU/24 WCU)
+      # is billed hourly even between survey rounds once an account exceeds the 25 RCU/WCU
+      # free tier. 2026-10-05 JZ.
+      BillingMode: PAY_PER_REQUEST
 
   BaceFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
